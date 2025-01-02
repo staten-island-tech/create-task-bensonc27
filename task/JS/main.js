@@ -12,3 +12,10 @@ async function getData() {
     alert("sorry could not find that.");
   }
 }
+
+//Select a genre, randomize the movie, take two movies and make cards
+//Cards should have title and image. Under the cards should be a submit button
+//Correct card remains, the other card is removed
+//If wrong card is chosen
+function higherview() {}
+// find which movie higher view
