@@ -13,7 +13,7 @@ const options = {
   },
 };
 
-async function getData() {
+async function getGenre() {
   try {
     const response = await fetch(
       "https://api.themoviedb.org/3/genre/movie/list?language=en",
@@ -23,7 +23,8 @@ async function getData() {
       throw new Error(response);
     } else {
       const data = await response.json();
-      console.log(data);
+      return data.name;
+      findGenre();
     }
   } catch (error) {
     console.log(error);
@@ -31,6 +32,36 @@ async function getData() {
   }
 }
 
+function findGenre() {
+  DomSelectors.button.addEventListener("click", function () {
+    const userInput = DomSelectors.button.value;
+    const genres = data.name;
+
+    if (genres.find((genre) => genre.name === userInput))
+      `<h2>Genre Found: ${userInput}</h2>`;
+    else {
+      alert("Sorry, that genre is not available");
+    }
+  });
+}
+
+function generateCards() {
+  array.forEach(element => {
+    
+  });
+}
+
+function highorlow(){
+  if ()
+  else
+
+  let i = 0
+  // for each correct answer, add one point
+  // 
+  array.forEach(element => {
+    
+  });
+}
 // function findGenre(data) {
 //   DomSelectors.button.addEventListener();
 // }
