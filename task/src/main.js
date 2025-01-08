@@ -28,8 +28,16 @@ function getGenre() {
 
 getGenre();
 
-function createCards(){
-  const randomCard =
+function createCards() {
+  const randomCard = (genres) =>
+    genres[Math.floor(Math.random() * genres.length)];
+  randomCard.forEach((card) => {
+    DomSelectors.container.insertAdjacentHTML(
+      "beforeend",
+      `<h2>: ${randomCard.name}</h2>
+             <img>: ${randomCard.image}`
+    );
+  });
 }
 
 // fetch(
@@ -66,10 +74,7 @@ function createCards(){
 //     DomSelectors.container.innerHTML = "";
 
 //     if (foundGenre) {
-//       DomSelectors.container.insertAdjacentHTML(
-//         "beforeend",
-//         `<h2>Genre: ${foundGenre.name}</h2>`
-//       );
+
 //       const options = {
 //         method: "GET",
 //         headers: {
