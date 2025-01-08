@@ -13,6 +13,8 @@ const options = {
   },
 };
 
+let genres = [];
+
 async function getGenre() {
   try {
     const response = await fetch(
@@ -23,61 +25,72 @@ async function getGenre() {
       throw new Error(response);
     } else {
       const data = await response.json();
-      return data.name;
-      findGenre();
+      genres = data.genres;
+      console.log(genres);
     }
   } catch (error) {
     console.log(error);
-    alert("sorry could not find that.");
+    alert("sorry could not find that Genre.");
   }
 }
 
 function findGenre() {
   DomSelectors.button.addEventListener("click", function () {
-    const userInput = DomSelectors.button.value;
-    const genres = data.name;
+    const userInput = DomSelectors.search.value;
+    const foundGenre = genres.find((genre) => genre.name === userInput);
+    DomSelectors.container.innerHTML = "";
 
-    if (genres.find((genre) => genre.name === userInput))
-      `<h2>Genre Found: ${userInput}</h2>`;
-    else {
+    if (foundGenre) {
+      DomSelectors.container.insertAdjacentHTML(
+        "beforeend",
+        `<h2>Genre: ${foundGenre.name}</h2>`
+      );
+    } else {
       alert("Sorry, that genre is not available");
     }
   });
 }
 
-function generateCards() {
-  array.forEach(element => {
-    
-  });
+async function start() {
+  await getGenre();
+  findGenre();
 }
 
-function highorlow(){
-  if ()
-  else
+start();
 
-  let i = 0
-  // for each correct answer, add one point
-  // 
-  array.forEach(element => {
-    
-  });
-}
-// function findGenre(data) {
-//   DomSelectors.button.addEventListener();
-// }
-// //Select a genre, randomize the movie, take two movies and make cards
-// //Cards should have title and image. Under the cards should be a submit button
-// //Correct card remains, the other card is removed
-// //If wrong card is chosen
-// function Createcard() {}
+// function generateCards() {
+//   array.forEach(element => {
 
-// function higherview() {
-//   // assign the movie views to the submit button and set that as the value
-//   // if the views of the movie on card A > the views of the movie on card B, return A
-//   // else return card B
-//   // const bigMovie = the larger movie
+//   });
 // }
 
-// // add event listener to the button A and button B
-// // if the user selects the correct button, then the card stays on the page and the other card is removed.
-// // if the user selects the wrong button, then the container is cleared and an alert message pops up saying "Wrong Choice, Restart."
+// function highorlow(){
+//   if ()
+//   else
+
+//   let i = 0
+//   // for each correct answer, add one point
+//   //
+//   array.forEach(element => {
+
+//   });
+// }
+// // function findGenre(data) {
+// //   DomSelectors.button.addEventListener();
+// // }
+// // //Select a genre, randomize the movie, take two movies and make cards
+// // //Cards should have title and image. Under the cards should be a submit button
+// // //Correct card remains, the other card is removed
+// // //If wrong card is chosen
+// // function Createcard() {}
+
+// // function higherview() {
+// //   // assign the movie views to the submit button and set that as the value
+// //   // if the views of the movie on card A > the views of the movie on card B, return A
+// //   // else return card B
+// //   // const bigMovie = the larger movie
+// // }
+
+// // // add event listener to the button A and button B
+// // // if the user selects the correct button, then the card stays on the page and the other card is removed.
+// // // if the user selects the wrong button, then the container is cleared and an alert message pops up saying "Wrong Choice, Restart."
