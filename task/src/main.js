@@ -1,68 +1,109 @@
 const DomSelectors = {
   container: document.querySelector(".container"),
-  search: document.getElementById("search"),
-  button: document.getElementById("button"),
+  list: document.getElementById("list"),
 };
 
-const options = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhODhiNzlkNzYwZjNiNWQ4ZTBlMGU4MDhlMTJlNzRhOSIsIm5iZiI6MTczNjE4MjQwNy4yMywic3ViIjoiNjc3YzBhODcyNWUwZTkxYzU3NzUxYmRjIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.Hp_s_sCHgUH2q9J5mwMMKNWmr5DJPqD3PysNbtAxbqc",
-  },
-};
+const genres = DomSelectors.list.value;
+console.log(genres);
 
-let genres = [];
-
-async function getGenre() {
-  try {
-    const response = await fetch(
-      "https://api.themoviedb.org/3/genre/movie/list?language=en",
+function getGenre() {
+  if (genres) {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhODhiNzlkNzYwZjNiNWQ4ZTBlMGU4MDhlMTJlNzRhOSIsIm5iZiI6MTczNjE4MjQwNy4yMywic3ViIjoiNjc3YzBhODcyNWUwZTkxYzU3NzUxYmRjIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.Hp_s_sCHgUH2q9J5mwMMKNWmr5DJPqD3PysNbtAxbqc",
+      },
+    };
+    fetch(
+      `https://api.themoviedb.org/3/discover/movie?with_genres=${genres}&include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`,
       options
-    );
-    if (response.status != 200) {
-      throw new Error(response);
-    } else {
-      const data = await response.json();
-      genres = data.genres;
-      console.log(genres);
-    }
-  } catch (error) {
-    console.log(error);
-    alert("sorry could not find that Genre.");
+    )
+      .then((res) => res.json())
+      .then((res) => console.log(res.results))
+      .catch((err) => console.error(err));
   }
 }
 
-function findGenre() {
-  DomSelectors.button.addEventListener("click", function () {
-    const userInput = DomSelectors.search.value;
-    const foundGenre = genres.find((genre) => genre.name === userInput);
-    DomSelectors.container.innerHTML = "";
+getGenre();
 
-    if (foundGenre) {
-      DomSelectors.container.insertAdjacentHTML(
-        "beforeend",
-        `<h2>Genre: ${foundGenre.name}</h2>`
-      );
-    } else {
-      alert("Sorry, that genre is not available");
-    }
-  });
+function createCards(){
+  const randomCard =
 }
 
-async function start() {
-  await getGenre();
-  findGenre();
-}
+// fetch(
+//   "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
+//   options
+// )
+//   .then((res) => res.json())
+//   .then((res) => console.log(res))
+//   .catch((err) => console.error(err));
 
-start();
+// async function getGenre() {
+//   try {
+//     const response = await fetch(
+//       "https://api.themoviedb.org/3/genre/movie/list?language=en",
+//       options
+//     );
+//     if (response.status != 200) {
+//       throw new Error(response);
+//     } else {
+//       const data = await response.json();
+//       genres = data.genres;
+//       console.log(genres);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     alert("sorry could not find that Genre.");
+//   }
+// }
 
-// function generateCards() {
-//   array.forEach(element => {
+// function findGenre() {
+//   DomSelectors.button.addEventListener("click", function () {
+//     const userInput = DomSelectors.search.value;
+//     const foundGenre = genres.find((genre) => genre.name === userInput);
+//     DomSelectors.container.innerHTML = "";
 
+//     if (foundGenre) {
+//       DomSelectors.container.insertAdjacentHTML(
+//         "beforeend",
+//         `<h2>Genre: ${foundGenre.name}</h2>`
+//       );
+//       const options = {
+//         method: "GET",
+//         headers: {
+//           accept: "application/json",
+//           Authorization:
+//             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhODhiNzlkNzYwZjNiNWQ4ZTBlMGU4MDhlMTJlNzRhOSIsIm5iZiI6MTczNjE4MjQwNy4yMywic3ViIjoiNjc3YzBhODcyNWUwZTkxYzU3NzUxYmRjIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.Hp_s_sCHgUH2q9J5mwMMKNWmr5DJPqD3PysNbtAxbqc",
+//         },
+//       };
+
+//       fetch(
+//         "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
+//         options
+//       )
+//         .then((res) => res.json())
+//         .then((res) => console.log(res))
+//         .catch((err) => console.error(err));
+//     } else {
+//       alert("Sorry, that genre is not available");
+//     }
 //   });
 // }
+
+// async function start() {
+//   await getGenre();
+//   findGenre();
+// }
+
+// start();
+
+// // function generateCards() {
+// //   array.forEach(element => {
+
+// //   });
+// // }
 
 // function highorlow(){
 //   if ()
