@@ -1,44 +1,116 @@
+const websiteGenre = [
+  {
+    Action: 28,
+    Adventure: 12,
+
+    Animation: 16,
+
+    Comedy: 35,
+
+    Crime: 80,
+
+    Documentary: 99,
+
+    Drama: 18,
+
+    Family: 10751,
+
+    Fantasy: 14,
+
+    History: 36,
+
+    Horror: 27,
+
+    Music: 10402,
+
+    Mystery: 9648,
+
+    Romance: 10749,
+
+    "Science Fiction": 878,
+
+    "TV Movie": 10770,
+
+    Thriller: 53,
+
+    War: 10752,
+
+    Western: 37,
+  },
+];
+
 const DomSelectors = {
   container: document.querySelector(".container"),
   list: document.getElementById("list"),
 };
 
-const genres = DomSelectors.list.value;
-console.log(genres);
+function getUserInput() {
+  DomSelectors.list.addEventListener("change", function () {
+    const userSelectedGenre = DomSelectors.list.value;
+    console.log(userSelectedGenre);
+    console.log(websiteGenre[0]);
+    for (const [key, value] of Object.entries(websiteGenre)) {
+      if (userSelectedGenre == key) {
+        var genreID = value;
+      }
+    }
+  });
+}
 
-function getGenre() {
-  if (genres) {
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhODhiNzlkNzYwZjNiNWQ4ZTBlMGU4MDhlMTJlNzRhOSIsIm5iZiI6MTczNjE4MjQwNy4yMywic3ViIjoiNjc3YzBhODcyNWUwZTkxYzU3NzUxYmRjIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.Hp_s_sCHgUH2q9J5mwMMKNWmr5DJPqD3PysNbtAxbqc",
-      },
-    };
-    fetch(
-      `https://api.themoviedb.org/3/discover/movie?with_genres=${genres}&include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`,
+getUserInput();
+
+async function getMovies(genreID) {
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${genreID}`,
       options
-    )
-      .then((res) => res.json())
-      .then((res) => console.log(res.results))
-      .catch((err) => console.error(err));
+    );
+
+    if (response.status != 200) {
+      throw new Error(response);
+    } else {
+      const data = await response.json();
+      console.log(data);
+    }
+  } catch (error) {
+    console.log(error);
+    alert("sorry could not find that");
   }
 }
 
-getGenre();
+// function getGenre() {
+//   if (genres) {
+//     const options = {
+//       method: "GET",
+//       headers: {
+//         accept: "application/json",
+//         Authorization:
+//           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhODhiNzlkNzYwZjNiNWQ4ZTBlMGU4MDhlMTJlNzRhOSIsIm5iZiI6MTczNjE4MjQwNy4yMywic3ViIjoiNjc3YzBhODcyNWUwZTkxYzU3NzUxYmRjIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.Hp_s_sCHgUH2q9J5mwMMKNWmr5DJPqD3PysNbtAxbqc",
+//       },
+//     };
+//     fetch(
+//       `https://api.themoviedb.org/3/discover/movie?with_genres=${genres}&include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`,
+//       options
+//     )
+//       .then((res) => res.json())
+//       .then((res) => console.log(res.results))
+//       .catch((err) => console.error(err));
+//   }
+// }
 
-function createCards() {
-  const randomCard = (genres) =>
-    genres[Math.floor(Math.random() * genres.length)];
-  randomCard.forEach((card) => {
-    DomSelectors.container.insertAdjacentHTML(
-      "beforeend",
-      `<h2>: ${randomCard.name}</h2>
-             <img>: ${randomCard.image}`
-    );
-  });
-}
+// getGenre();
+
+// function createCards() {
+//   const randomCard = (genres) =>
+//     genres[Math.floor(Math.random() * genres.length)];
+//   randomCard.forEach((card) => {
+//     DomSelectors.container.insertAdjacentHTML(
+//       "beforeend",
+//       `<h2>: ${randomCard.name}</h2>
+//              <img>: ${randomCard.image}`
+//     );
+//   });
+// }
 
 // fetch(
 //   "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
