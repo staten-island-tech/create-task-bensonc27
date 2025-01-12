@@ -5,6 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
+    <link href='CSS/style.css' rel='stylesheet'>
   </head>
   <body>
     <h1>Higher or Lower</h1>
@@ -29,8 +30,10 @@
       <option value="War">War</option>
       <option value="Western">Western</option>
     </select>
-    <h2>Score:</h2>
-    <div id="container"></div>
-    <script type="module" src="/src/main.js"></script>
+    <h2 class="score">Score:</h2>
+    <p class="answer"></p>
+    <div id="container">
+    </div>
+    <script type="module" src="JS/main.js"></script>
   </body>
 </html>
