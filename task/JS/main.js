@@ -79,26 +79,26 @@ async function getMovies(genreID) {
   }
 }
 
-function randomizer(array, number) {
+function randomizer(randomMovies, number) {
   const randomMoviearray = [];
   for (let i = 0; i < number; i++) {
-    const randomNumber = Math.floor(Math.random() * array.length);
-    const randomMovie = array[randomNumber];
+    const randomNumber = Math.floor(Math.random() * randomMovies.length);
+    const randomMovie = randomMovies[randomNumber];
     randomMoviearray.push(randomMovie);
   }
   return randomMoviearray;
 }
 
-function createMovies(movies) {
+function createMovies(randomMovies) {
   DomSelectors.container.innerHTML = "";
 
-  movies.forEach((movie) => {
+  randomMovies.forEach((randomMovie) => {
     const CardHTML = `
    <div class="card">
-      <h2>Movie: ${movie.title}</h2>
-      <img class="picture" src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
-      <p class="popularity" hidden>${movie.popularity}</p>
-       <button id="${movie.title}" class="button">Choose</button>
+      <h2>Movie: ${randomMovie.title}</h2>
+      <img class="picture" src="https://image.tmdb.org/t/p/w500${randomMovie.poster_path}">
+      <p class="popularity" hidden>${randomMovie.popularity}</p>
+       <button id="${randomMovie.title}" class="button">Choose</button>
     </div>
 `;
     DomSelectors.container.insertAdjacentHTML("beforeend", CardHTML);
@@ -111,10 +111,10 @@ function userChoice(mostPopularMovie) {
   for (let x = 0; x < userButtons.length; x++) {
     userButtons[x].addEventListener("click", function (event) {
       if (userButtons[x].id === mostPopularMovie.title) {
-        console.log("Correct!");
+        alert("Correct!");
         score++;
       } else {
-        console.log("Wrong.");
+        alert("Wrong.");
         score--;
       }
       DomSelectors.score.innerHTML = `${score}`;
@@ -127,7 +127,6 @@ function userChoice(mostPopularMovie) {
       setTimeout(function () {
         const userSelectedGenre = DomSelectors.list.value;
         DomSelectors.answer.innerHTML = "";
-        console.log(DomSelectors.popularity);
         const listedGenre = websiteGenre.find(
           (genre) => genre.name === userSelectedGenre
         );
